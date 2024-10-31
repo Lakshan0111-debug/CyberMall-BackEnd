@@ -58,7 +58,7 @@ public class ProductController {
                                                 @RequestParam("quantity") String quantity) {
         boolean isUpdated = false;
         try {
-            isUpdated = productService.updateProduct(productId,new ProductDto(productName, description, supplierName, unitPrice, quantity, file.getBytes()));
+            isUpdated = productService.updateProduct(productId ,new ProductDto(productName, description, supplierName, unitPrice, quantity, file.getBytes()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
