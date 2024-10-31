@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class ProductDto {
-
     private String productName;
     private String description;
     private String supplierName;
