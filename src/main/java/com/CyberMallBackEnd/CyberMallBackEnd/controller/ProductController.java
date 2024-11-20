@@ -1,7 +1,6 @@
 package com.CyberMallBackEnd.CyberMallBackEnd.controller;
 
 import com.CyberMallBackEnd.CyberMallBackEnd.dto.ProductDto;
-import com.CyberMallBackEnd.CyberMallBackEnd.entity.Product;
 import com.CyberMallBackEnd.CyberMallBackEnd.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
