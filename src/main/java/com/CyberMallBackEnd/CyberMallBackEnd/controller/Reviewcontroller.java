@@ -1,55 +1,42 @@
 package com.CyberMallBackEnd.CyberMallBackEnd.controller;
 
-
-
-import com.CyberMallBackEnd.CyberMallBackEnd.entity.Review;
-import com.CyberMallBackEnd.CyberMallBackEnd.exception.ReviewNotFoundException;
-import com.CyberMallBackEnd.CyberMallBackEnd.repositry.Reviewrepositry;
+import com.CyberMallBackEnd.CyberMallBackEnd.model.Review;
+import com.CyberMallBackEnd.CyberMallBackEnd.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
+@RequestMapping("/api/v1/review")
+@CrossOrigin(origins = "*")
 public class Reviewcontroller {
     @Autowired
+    private ReviewService reviewService;
 
-    private Reviewrepositry reviewrepositry;
-
-    @PostMapping("/review")
+    @PostMapping("")
     Review newReview(@RequestBody Review newReview){
-        return reviewrepositry.save(newReview);
+        return reviewService.createReview(newReview);
     }
 
-    @GetMapping("/reviews")
+    @GetMapping("")
     List<Review> getAllReviews(){
-        return reviewrepositry.findAll();
+        return reviewService.getAllReview();
     }
 
-    @GetMapping("/review/{id}")
+    @GetMapping("/{id}")
     Review getReviewById(@PathVariable Long id){
-        return reviewrepositry.findById(id)
-                .orElseThrow(()->new ReviewNotFoundException(id));
+        return reviewService.getReviewById(id);
     }
 
-    @PutMapping("/review/{id}")
-    Review updateReview(@RequestBody Review newReview ,@PathVariable Long id){
-        return reviewrepositry.findById(id)
-                .map(review -> {
-                    review.setComment(newReview.getComment());
-                    review.setRating(newReview.getRating());
-                    return reviewrepositry.save(review);
-                }).orElseThrow(()->new ReviewNotFoundException(id));
+    @PutMapping("/{id}")
+    Review updateReview(@PathVariable Long id, @RequestBody Review newReview){
+        return reviewService.updateReview(id,newReview);
     }
 
-    @DeleteMapping("/review/{id}")
+    @DeleteMapping("/{id}")
     String deleteReview(@PathVariable Long id){
-        if (!reviewrepositry.existsById(id)){
-            throw new ReviewNotFoundException(id);
-        }
-        reviewrepositry.deleteById(id);
-        return "Review with id "+id+" has been deleted success";
+        return reviewService.deleteReview(id);
     }
 
 }
