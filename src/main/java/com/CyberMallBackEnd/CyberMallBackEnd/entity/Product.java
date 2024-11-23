@@ -2,11 +2,17 @@ package com.CyberMallBackEnd.CyberMallBackEnd.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Product")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +28,7 @@ public class Product {
     private String supplierName;
 
     @Column(name = "unit_price")
-    private String unitPrice;
+    private BigDecimal unitPrice;
 
     @Column(name = "quantity")
     private String quantity;
