@@ -22,18 +22,18 @@ public class Cart {
     private BigDecimal totalPrice;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id") // Fixed column name
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> billItems = new ArrayList<>(); // Initialize list
+    private List<CartItem> cartItems = new ArrayList<>();
 
     public void addCartItem(Product product, int quantity, BigDecimal subtotal) {
         CartItem cartItem = new CartItem();
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
         cartItem.setSubtotal(subtotal);
-        cartItem.setCart(this); // Set the parent reference
-        this.billItems.add(cartItem);
+        cartItem.setCart(this);
+        this.cartItems.add(cartItem);
     }
 }
