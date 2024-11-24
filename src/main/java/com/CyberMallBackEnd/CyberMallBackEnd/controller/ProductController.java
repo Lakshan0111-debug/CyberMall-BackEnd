@@ -1,15 +1,15 @@
 package com.CyberMallBackEnd.CyberMallBackEnd.controller;
 
 import com.CyberMallBackEnd.CyberMallBackEnd.dto.ProductDto;
-import com.CyberMallBackEnd.CyberMallBackEnd.service.ProductService;
+import com.CyberMallBackEnd.CyberMallBackEnd.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
@@ -17,29 +17,33 @@ import java.util.Optional;
 public class ProductController {
 
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productServiceImpl;
 
     @GetMapping("/get-all")
     public List<ProductDto> getAllProducts() {
-        return productService.getAllProducts();
+        return productServiceImpl.getAllProducts();
     }
 
 
     @GetMapping("/search-product/{productId}")
-    public ProductDto searchProductById(@PathVariable Long productId){
-        return productService.searchProductById(productId);
+    public ProductDto searchProductById(@PathVariable Integer productId){
+        return productServiceImpl.searchProductById(productId);
     }
 
     @PostMapping("/add-product")
-    public ResponseEntity<String> saveProduct(@RequestBody @RequestParam("image") MultipartFile file,
+    public ResponseEntity<String> saveProduct(@RequestBody @PathVariable("image") MultipartFile file,        @RequestParam("productId") Integer productId,
                                               @RequestParam("productName") String productName,
                                               @RequestParam("description") String description,
                                               @RequestParam("supplierName") String supplierName,
                                               @RequestParam("unitPrice") String unitPrice,
-                                              @RequestParam("quantity") String quantity) {
+                                              @RequestParam("quantity") String quantity
+                                              ) {
+
+
 
         try {
-            productService.saveProduct(new ProductDto(productName, description, supplierName, unitPrice, quantity,file.getBytes()));
+            productServiceImpl.saveProduct(new ProductDto(productId,productName, description, supplierName, unitPrice, quantity, Base64.getEncoder().encodeToString(file.getBytes())));
+          //  productServiceImpl.saveProduct(new ProductDto(productDto.getProductId(), productDto.getProductName(), productDto.getDescription(), productDto.getSupplierName(), productDto.getUnitPrice(), productDto.getQuantity(), file.getBytes()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -48,7 +52,7 @@ public class ProductController {
 
     // PUT method for updating an existing product
     @PutMapping("/update-product/{productId}")
-    public ResponseEntity<String> updateProduct(@RequestBody @PathVariable Long productId,
+    public ResponseEntity<String> updateProduct(@RequestBody @PathVariable Integer productId,
                                                 @RequestParam("image") MultipartFile file,
                                                 @RequestParam("productName") String productName,
                                                 @RequestParam("description") String description,
@@ -57,7 +61,7 @@ public class ProductController {
                                                 @RequestParam("quantity") String quantity) {
         boolean isUpdated = false;
         try {
-            isUpdated = productService.updateProduct(productId ,new ProductDto(productName, description, supplierName, unitPrice, quantity, file.getBytes()));
+            isUpdated = productServiceImpl.updateProduct(new ProductDto(productId,productName, description, supplierName, unitPrice, quantity, Base64.getEncoder().encodeToString(file.getBytes())));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -69,7 +73,7 @@ public class ProductController {
     }
 
     @DeleteMapping("delete-product/{productId}")
-    public boolean deleteProduct(@PathVariable Long productId){
-        return productService.deleteProduct(productId);
+    public boolean deleteProduct(@PathVariable Integer productId){
+        return productServiceImpl.deleteProduct(productId);
     }
 }

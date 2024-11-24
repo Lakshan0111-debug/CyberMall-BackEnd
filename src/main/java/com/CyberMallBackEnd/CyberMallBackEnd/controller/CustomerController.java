@@ -1,7 +1,7 @@
 package com.CyberMallBackEnd.CyberMallBackEnd.controller;
 
 import com.CyberMallBackEnd.CyberMallBackEnd.entity.Customer;
-import com.CyberMallBackEnd.CyberMallBackEnd.service.CustomerService;
+import com.CyberMallBackEnd.CyberMallBackEnd.service.impl.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,29 +15,29 @@ import java.util.Optional;
 @RequestMapping("/customers")
 public class CustomerController {
     @Autowired
-    private CustomerService customerService;
+    private CustomerServiceImpl customerServiceImpl;
 
     @GetMapping
     public List<Customer> getAllcustomers() {
-        return customerService.getAllcustomers();
+        return customerServiceImpl.getAllcustomers();
     }
 
 
     @GetMapping("/{customerId}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable Long customerId) {
-        Optional<Customer> customer = customerService.getcustomerById(customerId);
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Integer customerId) {
+        Optional<Customer> customer = customerServiceImpl.getcustomerById(customerId);
         return customer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/addC")
     public ResponseEntity<String> savecustomer(@RequestBody Customer customer) {
-        customerService.savecustomer(customer.getCustomerName(), customer.getEmail(), customer.getPhoneNumber(), customer.getAddress(), customer.getUserName(),customer.getPassword());
+        customerServiceImpl.savecustomer(customer.getCustomerName(), customer.getEmail(), customer.getPhoneNumber(), customer.getAddress(), customer.getUserName(),customer.getPassword());
         return ResponseEntity.ok("customer saved successfully!");
     }
 
     @PutMapping("/{customerId}")
-    public ResponseEntity<String> updatecustomer(@PathVariable Long customerId, @RequestBody Customer customer) {
-        boolean isUpdated = customerService.updatecustomer(customerId, customer.getCustomerName(), customer.getEmail(), customer.getPhoneNumber(), customer.getAddress());
+    public ResponseEntity<String> updatecustomer(@PathVariable Integer customerId, @RequestBody Customer customer) {
+        boolean isUpdated = customerServiceImpl.updatecustomer(customerId, customer.getCustomerName(), customer.getEmail(), customer.getPhoneNumber(), customer.getAddress());
         if (isUpdated) {
             return ResponseEntity.ok("customer updated successfully!");
         } else {
@@ -47,8 +47,8 @@ public class CustomerController {
 
 
     @DeleteMapping("/{customerId}")
-    public ResponseEntity<Void> deletecustomer(@PathVariable Long customerId) {
-        customerService.deletecustomer(customerId);
+    public ResponseEntity<Void> deletecustomer(@PathVariable Integer customerId) {
+        customerServiceImpl.deletecustomer(customerId);
         return ResponseEntity.noContent().build();
     }
 }

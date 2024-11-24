@@ -8,10 +8,11 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class ProductDto {
+    private Integer productId;
     private String productName;
     private String description;
     private String supplierName;
     private String unitPrice;
     private String quantity;
-    private byte[] image;
+    private String image;
 }

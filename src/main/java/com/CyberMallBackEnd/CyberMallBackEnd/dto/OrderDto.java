@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class OrderDto {
+    private Integer orderId;
     private String customerName;
     private String shippingAddress;
     private String email;
