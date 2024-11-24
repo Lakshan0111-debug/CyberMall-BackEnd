@@ -1,4 +1,4 @@
-package com.CyberMallBackEnd.CyberMallBackEnd.model;
+package com.CyberMallBackEnd.CyberMallBackEnd.Entity;
 
 
 import jakarta.persistence.Entity;

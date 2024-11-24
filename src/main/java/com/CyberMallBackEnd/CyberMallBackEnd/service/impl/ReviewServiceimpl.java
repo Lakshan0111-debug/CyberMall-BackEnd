@@ -1,7 +1,7 @@
 package com.CyberMallBackEnd.CyberMallBackEnd.service.impl;
 
 import com.CyberMallBackEnd.CyberMallBackEnd.exception.ReviewNotFoundException;
-import com.CyberMallBackEnd.CyberMallBackEnd.model.Review;
+import com.CyberMallBackEnd.CyberMallBackEnd.Entity.Review;
 import com.CyberMallBackEnd.CyberMallBackEnd.repositry.Reviewrepositry;
 import com.CyberMallBackEnd.CyberMallBackEnd.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
