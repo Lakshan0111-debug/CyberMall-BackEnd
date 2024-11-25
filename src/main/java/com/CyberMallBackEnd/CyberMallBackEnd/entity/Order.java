@@ -4,6 +4,8 @@ package com.CyberMallBackEnd.CyberMallBackEnd.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Orders")
 @Data
@@ -12,7 +14,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    @Column(name = "customer")
+    @Column(name = "customer_name")
     private String customerName;
 
     @Column(name = "address")
@@ -30,9 +32,13 @@ public class Order {
     @Column(name = "no_of_items")
     private String noOfItems;
 
-    @Column(name = "date")
+    @Column(name = "date_time")
     private String date;
 
-    @Column(name = "time")
-    private String time;
+    @OneToMany
+    private List<Product> products;
+
+//    @Column(name = "time")
+//    private String time;
+
 }

@@ -2,6 +2,8 @@ package com.CyberMallBackEnd.CyberMallBackEnd.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,6 +17,7 @@ public class OrderDto {
     private String phoneNo;
     private String totalPrice;
     private String noOfItems;
-    private String date;
-    private String time;
+    private String dateTime;
+    private List<ProductDto> productDtos;
+//    private String time;
 }
