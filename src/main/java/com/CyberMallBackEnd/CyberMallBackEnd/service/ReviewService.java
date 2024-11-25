@@ -1,5 +1,5 @@
 package com.CyberMallBackEnd.CyberMallBackEnd.service;
-import com.CyberMallBackEnd.CyberMallBackEnd.Entity.Review;
+import com.CyberMallBackEnd.CyberMallBackEnd.entity.Review;
 
 import org.springframework.stereotype.Service;
 

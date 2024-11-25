@@ -1,6 +1,6 @@
 package com.CyberMallBackEnd.CyberMallBackEnd.controller;
 
-import com.CyberMallBackEnd.CyberMallBackEnd.Entity.Review;
+import com.CyberMallBackEnd.CyberMallBackEnd.entity.Review;
 import com.CyberMallBackEnd.CyberMallBackEnd.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
