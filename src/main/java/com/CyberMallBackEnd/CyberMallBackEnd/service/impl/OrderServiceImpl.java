@@ -8,6 +8,9 @@ import com.CyberMallBackEnd.CyberMallBackEnd.service.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +37,16 @@ public class OrderServiceImpl implements OrderService {
 
     public Order saveOrder(OrderDto orderDto){
         if(orderDto !=null){
-
+            orderDto.setDateTime(getCurrentDateTime());
             return orderRepository.save(mapper.map(orderDto, Order.class));
         }
         return null;
+    }
+    private String getCurrentDateTime() {
+        LocalDateTime now = LocalDateTime.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return now.format(formatter);
     }
 
     public boolean updateOrder(Long id,OrderDto orderDto){

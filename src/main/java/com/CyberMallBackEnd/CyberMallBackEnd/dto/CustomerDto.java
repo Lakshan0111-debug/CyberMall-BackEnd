@@ -1,6 +1,14 @@
 package com.CyberMallBackEnd.CyberMallBackEnd.dto;
 
-public class Customer {
+
+import lombok.*;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class CustomerDto {
     private Integer id;
     private String customerName;
     private String email;

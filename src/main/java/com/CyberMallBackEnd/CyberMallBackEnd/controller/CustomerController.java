@@ -1,5 +1,6 @@
 package com.CyberMallBackEnd.CyberMallBackEnd.controller;
 
+import com.CyberMallBackEnd.CyberMallBackEnd.dto.CustomerDto;
 import com.CyberMallBackEnd.CyberMallBackEnd.entity.Customer;
 import com.CyberMallBackEnd.CyberMallBackEnd.service.impl.CustomerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,14 @@ public class CustomerController {
     private CustomerServiceImpl customerServiceImpl;
 
     @GetMapping
-    public List<Customer> getAllcustomers() {
+    public List<CustomerDto> getAllcustomers() {
         return customerServiceImpl.getAllcustomers();
     }
 
 
     @GetMapping("/{customerId}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable Integer customerId) {
-        Optional<Customer> customer = customerServiceImpl.getcustomerById(customerId);
+    public ResponseEntity<CustomerDto> getCustomerById(@PathVariable Integer customerId) {
+        Optional<CustomerDto> customer = customerServiceImpl.getcustomerById(customerId);
         return customer.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -50,5 +51,11 @@ public class CustomerController {
     public ResponseEntity<Void> deletecustomer(@PathVariable Integer customerId) {
         customerServiceImpl.deletecustomer(customerId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/find-by-email/{email}")
+    public CustomerDto findByEmail(@PathVariable String email){
+
+        return customerServiceImpl.findByEmail(email);
     }
 }
