@@ -9,19 +9,19 @@ import lombok.Data;
 public class Supplier {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long SupplierId;
+    private Long supplierId;
 
     @Column(name = "supplier_name")
-    private String SupplierName;
+    private String supplierName;
 
     @Column(name = "email")
-    private String Email;
+    private String email;
 
     @Column(name = "phone_number")
-    private String PhoneNumber;
+    private String phoneNumber;
 
     @Column(name = "address")
-    private String Address;
+    private String address;
 
 
 }

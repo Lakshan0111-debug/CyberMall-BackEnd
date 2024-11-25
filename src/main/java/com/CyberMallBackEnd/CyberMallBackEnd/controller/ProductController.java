@@ -31,7 +31,7 @@ public class ProductController {
     }
 
     @PostMapping("/add-product")
-    public ResponseEntity<String> saveProduct(@RequestBody @PathVariable("image") MultipartFile file,        @RequestParam("productId") Integer productId,
+    public ResponseEntity<String> saveProduct(@RequestBody @RequestParam("image") MultipartFile file,        @RequestParam("productId") Integer productId,
                                               @RequestParam("productName") String productName,
                                               @RequestParam("description") String description,
                                               @RequestParam("supplierName") String supplierName,
@@ -42,8 +42,9 @@ public class ProductController {
 
 
         try {
+            System.out.println(file);
             productServiceImpl.saveProduct(new ProductDto(productId,productName, description, supplierName, unitPrice, quantity, Base64.getEncoder().encodeToString(file.getBytes())));
-          //  productServiceImpl.saveProduct(new ProductDto(productDto.getProductId(), productDto.getProductName(), productDto.getDescription(), productDto.getSupplierName(), productDto.getUnitPrice(), productDto.getQuantity(), file.getBytes()));
+          //  productServiceImpl.saveProduct(new ProductDto(0, productName, description, supplierName, unitPrice, quantity, file.getBytes().toString()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

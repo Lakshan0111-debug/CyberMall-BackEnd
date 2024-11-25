@@ -1,5 +1,6 @@
 package com.CyberMallBackEnd.CyberMallBackEnd.controller;
 
+import com.CyberMallBackEnd.CyberMallBackEnd.dto.SupplierDto;
 import com.CyberMallBackEnd.CyberMallBackEnd.entity.Supplier;
 import com.CyberMallBackEnd.CyberMallBackEnd.service.impl.SupplierServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,26 +17,26 @@ public class SupplierController {
     private SupplierServiceImpl supplierServiceImpl;
 
     @GetMapping
-    public List<Supplier> getAllsuppliers() {
+    public List<SupplierDto> getAllsuppliers() {
         return supplierServiceImpl.getAllsuppliers();
     }
 
 
     @GetMapping("/{supplierId}")
-    public ResponseEntity<Supplier> getsupplierById(@PathVariable Long supplierId) {
-        Optional<Supplier> supplier = supplierServiceImpl.getsupplierById(supplierId);
+    public ResponseEntity<SupplierDto> getsupplierById(@PathVariable Long supplierId) {
+        Optional<SupplierDto> supplier = supplierServiceImpl.getsupplierById(supplierId);
         return supplier.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/addS")
-    public ResponseEntity<String> savesupplier(@RequestBody Supplier supplier) {
-        supplierServiceImpl.savesupplier(supplier.getSupplierName(), supplier.getEmail(), supplier.getPhoneNumber(), supplier.getAddress());
+    public ResponseEntity<String> savesupplier(@RequestBody SupplierDto supplierDto) {
+        supplierServiceImpl.savesupplier(supplierDto.getSupplierName(), supplierDto.getEmail(), supplierDto.getPhoneNumber(), supplierDto.getAddress());
         return ResponseEntity.ok("supplier saved successfully!");
     }
 
     // PUT method for updating an existing supplier
     @PutMapping("/{supplierId}")
-    public ResponseEntity<String> updatesupplier(@PathVariable Long supplierId, @RequestBody Supplier supplier) {
+    public ResponseEntity<String> updatesupplier(@PathVariable Long supplierId, @RequestBody SupplierDto supplier) {
         boolean isUpdated = supplierServiceImpl.updatesupplier(supplierId, supplier.getSupplierName(), supplier.getEmail(), supplier.getPhoneNumber(), supplier.getAddress());
         if (isUpdated) {
             return ResponseEntity.ok("Supplier updated successfully!");

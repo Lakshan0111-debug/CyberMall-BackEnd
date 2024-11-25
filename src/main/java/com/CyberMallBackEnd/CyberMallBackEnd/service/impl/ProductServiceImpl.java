@@ -26,11 +26,20 @@ public class ProductServiceImpl implements ProductService {
 
     public List<ProductDto> getAllProducts() {
         List<ProductDto> products=new ArrayList<>();
-        productRepository.findAll().forEach(product -> {
-            ProductDto productDto=mapper.map(product, ProductDto.class);
-            productDto.setImage(Base64.getEncoder().encodeToString(product.getImage()));
-            products.add(productDto);
-        });
+        for(Product product:productRepository.findAll()){
+            if(product!=null){
+                ProductDto productDto=mapper.map(product, ProductDto.class);
+                try{
+                    productDto.setImage(Base64.getEncoder().encodeToString(product.getImage()));
+
+                    products.add(productDto);
+                }catch (Exception e){
+                    System.out.println(e);
+                }
+
+            }
+
+        };
 
         return products;
     }
@@ -46,8 +55,11 @@ public class ProductServiceImpl implements ProductService {
 
     public Product saveProduct(ProductDto productDto){
         if(productDto !=null){
-
-            return productRepository.save(mapper.map(productDto, Product.class));
+            byte[] link=Base64.getDecoder().decode(productDto.getImage());
+            Product product=mapper.map(productDto, Product.class);
+            System.out.println(product.getProductId());
+            product.setImage(link);
+            return productRepository.save(product);
         }
         return null;
     }
